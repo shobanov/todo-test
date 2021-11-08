@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
-import { AppRootStateType } from '../../redux/store'
-import { addTodolistAC, TodolistType } from '../../redux/todolists-reducer'
-import AddItemForm from '../AddItemForm/AddItemForm'
-import TodolistItem from '../TodolistItem/TodolistItem'
+import { AppRootStateType } from '../../redux/store';
+import { addTodolistAC, TodolistType } from '../../redux/todolists-reducer';
+import AddItemForm from '../AddItemForm/AddItemForm';
+import TodolistItem from '../TodolistItem/TodolistItem';
 
 const Todolist: React.FC = () => {
   const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists);

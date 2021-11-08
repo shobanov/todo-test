@@ -3,12 +3,12 @@ import { Delete } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
-import { AppRootStateType } from '../../redux/store'
-import AddItemForm from '../AddItemForm/AddItemForm'
-import { changeTodolistFilterAC, changeTodolistTitleAC, FilterValuesType, removeTodolistAC } from '../../redux/todolists-reducer'
-import { addTaskAC, TaskType } from '../../redux/tasks-reducer'
-import EditableTitle from '../EditableTitle/EditableTitle'
-import Task from '../Task/Task'
+import { AppRootStateType } from '../../redux/store';
+import AddItemForm from '../AddItemForm/AddItemForm';
+import { changeTodolistFilterAC, changeTodolistTitleAC, FilterValuesType, removeTodolistAC } from '../../redux/todolists-reducer';
+import { addTaskAC, TaskType } from '../../redux/tasks-reducer';
+import EditableTitle from '../EditableTitle/EditableTitle';
+import Task from '../Task/Task';
 
 type TodolistPropsType = {
   todolistId: string;
@@ -31,7 +31,7 @@ const TodoList: React.FC<TodolistPropsType> = ({
   };
 
   const changeTodoListTitle = (newTitle: string) => {
-    dispatch(changeTodolistTitleAC(todolistId, newTitle))
+    dispatch(changeTodolistTitleAC(todolistId, newTitle));
   };
 
   const onAllClickHandler = () => dispatch(changeTodolistFilterAC(FilterValuesType.all, todolistId));
@@ -42,23 +42,7 @@ const TodoList: React.FC<TodolistPropsType> = ({
     dispatch(addTaskAC(todolistId, title));
   };
 
-  /*
-    const filteredTasks = tasks.filter(task => FilterValuesType[filter]);
-
-    jsx filteredTasks.map
-  */
-
-  let tasksForTodoList = tasks;
-
-  if (filter === FilterValuesType.active) {
-    tasks.filter(task => task.isDone === false);
-  };
-  if (filter === FilterValuesType.completed) {
-    tasks.filter(task => task.isDone === true);
-  };
-  // redux status emum
-
-  // task.status === FilterValuesType.completed
+  const filteredTasks = tasks.filter(task => task.status !== filter);
 
   return (
     <Box maxWidth="300px" style={{ wordBreak: "break-all" }}  >
@@ -72,7 +56,7 @@ const TodoList: React.FC<TodolistPropsType> = ({
       <AddItemForm addItem={addTask}/>
       <div>
         {
-          tasksForTodoList.map(task => task.todolistId === todolistId && <Task key={task.taskId} {...task} />)
+          filteredTasks.map(task => task.todolistId === todolistId && <Task key={task.taskId} {...task} />)
         }
       </div>
       <div>

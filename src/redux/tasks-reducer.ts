@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { FilterValuesType } from './todolists-reducer';
 
 const initialState: Array<TaskType> = [];
 
@@ -12,15 +13,14 @@ export const tasksReducer = (state: Array<TaskType> = initialState, action: Acti
             todolistId: action.todolistId,
             taskId: action.taskId,
             title: action.title,
-            isDone: false,
-            date: ''
+            status: FilterValuesType.active,
           }
         ]
       );
     case 'REMOVE-TASK':
       return state.filter(task => task.taskId !== action.taskId);
     case 'CHANGE-TASK-STATUS':
-      return state.map(task => task.taskId === action.taskId ? {...task, isDone: action.status} : task);
+      return state.map(task => task.taskId === action.taskId ? {...task, status: action.status} : task);
     case 'CHANGE-TASK-TITLE':
       return state.map(task => task.taskId === action.taskId ? {...task, title: action.newTitle} : task);
     default:
@@ -31,7 +31,7 @@ export const tasksReducer = (state: Array<TaskType> = initialState, action: Acti
 // actions
 export const removeTaskAC = (taskId: string) => ({ type: 'REMOVE-TASK', taskId } as const);
 export const addTaskAC = (todolistId: string, title: string) => ({ type: 'ADD-TASK', todolistId, taskId: uuidv4(), title } as const);
-export const changeTaskStatusAC = (taskId: string, status: boolean) => ({type: 'CHANGE-TASK-STATUS', taskId, status} as const);
+export const changeTaskStatusAC = (taskId: string, status: FilterValuesType ) => ({type: 'CHANGE-TASK-STATUS', taskId, status} as const);
 export const changeTaskTitleAC = (taskId: string, newTitle: string) => ({ type: 'CHANGE-TASK-TITLE', taskId, newTitle } as const);
 
 // types
@@ -45,8 +45,7 @@ export type TaskType = {
   todolistId: string;
   taskId: string;
   title: string;
-  isDone: boolean;
-  date: string;
+  status: FilterValuesType;
 };
 
 export type TasksStateType = {

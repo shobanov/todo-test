@@ -4,23 +4,25 @@ import React, { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from '../../redux/tasks-reducer';
-import EditableTitle from '../EditableTitle/EditableTitle'
+import EditableTitle from '../EditableTitle/EditableTitle';
+import { FilterValuesType } from '../../redux/todolists-reducer';
 
 type TaskPropsType = {
   taskId: string;
   title: string;
-  isDone: boolean;
+  status: FilterValuesType;
 };
 
 const Task: React.FC<TaskPropsType> = ({
   taskId,
   title,
-  isDone,
+  status,
 }) => {
   const dispatch = useDispatch();
 
   const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeTaskStatusAC(taskId, e.currentTarget.checked));
+    const statusTask = e.currentTarget.checked ? FilterValuesType.completed : FilterValuesType.active;
+    dispatch(changeTaskStatusAC(taskId, statusTask));
   };
 
   const changeTaskTitle = (newTitle: string) => {
@@ -30,7 +32,9 @@ const Task: React.FC<TaskPropsType> = ({
   const removeTask = () => {
     dispatch(removeTaskAC(taskId));
   };
-  // const isDone = task.status === FilterValuesType.completed
+
+  const isDone = status === FilterValuesType.completed
+
   return (
     <Box display="flex" alignItems="center" justifyContent="space-around">
       <Checkbox
