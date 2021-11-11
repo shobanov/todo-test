@@ -4,7 +4,7 @@ import React, { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from '../../redux/tasks';
-import EditableTitle from '../EditableTitle/EditableTitle';
+import EditableTitle from '../EditableTitle';
 import { FilterValuesType } from '../../redux/todolists';
 
 type TaskPropsType = {
