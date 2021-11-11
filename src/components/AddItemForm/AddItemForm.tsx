@@ -38,20 +38,20 @@ const AddItemForm = React.memo(({ addItem }: AddItemFormPropsType) => {
       <TextField
         value={title}
         id="outlined-error-helper-text"
-        variant={'outlined'}
-        label={'Type text'}
+        variant="outlined"
+        label={"Type title"}
         error={Boolean(errorMessage)}
         onChange={onChangeTitleHandler}
         onKeyPress={onPressEnterHandler}
-        className={errorMessage ? 'error' : ''}
+        className={errorMessage ? "error" : ""}
         helperText={errorMessage}
-        size={'small'}
+        size="small"
       />
       <IconButton
         onClick={addItemHandler}
-        color={'primary'}
+        color="primary"
       >
-        <Add fontSize={'large'} />
+        <Add style={{ margin: "-4px" }}/>
       </IconButton>
     </div>
   );

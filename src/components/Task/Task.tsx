@@ -3,9 +3,9 @@ import { Box, Checkbox, IconButton } from '@material-ui/core';
 import React, { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from '../../redux/tasks-reducer';
+import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from '../../redux/tasks';
 import EditableTitle from '../EditableTitle/EditableTitle';
-import { FilterValuesType } from '../../redux/todolists-reducer';
+import { FilterValuesType } from '../../redux/todolists';
 
 type TaskPropsType = {
   taskId: string;
@@ -21,8 +21,8 @@ const Task: React.FC<TaskPropsType> = ({
   const dispatch = useDispatch();
 
   const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-    const statusTask = e.currentTarget.checked ? FilterValuesType.completed : FilterValuesType.active;
-    dispatch(changeTaskStatusAC(taskId, statusTask));
+    const taskStatus = e.currentTarget.checked ? FilterValuesType.completed : FilterValuesType.active;
+    dispatch(changeTaskStatusAC(taskId, taskStatus));
   };
 
   const changeTaskTitle = (newTitle: string) => {
@@ -33,10 +33,10 @@ const Task: React.FC<TaskPropsType> = ({
     dispatch(removeTaskAC(taskId));
   };
 
-  const isDone = status === FilterValuesType.completed
+  const isDone = status === FilterValuesType.completed;
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="space-around">
+    <Box width="260px">
       <Checkbox
         checked={isDone}
         color="primary"

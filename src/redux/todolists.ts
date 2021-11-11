@@ -57,4 +57,4 @@ export type TodolistType = {
 
 export enum FilterValuesType {
   all, active, completed
-}
+};

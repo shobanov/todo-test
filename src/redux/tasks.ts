@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { FilterValuesType } from './todolists-reducer';
+import { FilterValuesType } from './todolists';
 
 const initialState: Array<TaskType> = [];
 

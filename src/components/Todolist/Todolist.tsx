@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
 import { AppRootStateType } from '../../redux/store';
-import { addTodolistAC, TodolistType } from '../../redux/todolists-reducer';
+import { addTodolistAC, TodolistType } from '../../redux/todolists';
 import AddItemForm from '../AddItemForm/AddItemForm';
 import TodolistItem from '../TodolistItem/TodolistItem';
 
@@ -20,7 +20,7 @@ const Todolist: React.FC = () => {
 
   return (
     <>
-      <Grid container style={{ padding: "20px" }}>
+      <Grid container style={{ padding: "30px 0" }}>
         <AddItemForm addItem={addTodolist} />
       </Grid>
       <Grid container spacing={3}>

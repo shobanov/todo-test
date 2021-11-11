@@ -1,14 +1,14 @@
-import { Box, Button, IconButton, Typography } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { Box, Button, Chip, IconButton, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
 import { AppRootStateType } from '../../redux/store';
 import AddItemForm from '../AddItemForm/AddItemForm';
-import { changeTodolistFilterAC, changeTodolistTitleAC, FilterValuesType, removeTodolistAC } from '../../redux/todolists-reducer';
-import { addTaskAC, TaskType } from '../../redux/tasks-reducer';
+import { changeTodolistFilterAC, changeTodolistTitleAC, FilterValuesType, removeTodolistAC } from '../../redux/todolists';
+import { addTaskAC, TaskType } from '../../redux/tasks';
 import EditableTitle from '../EditableTitle/EditableTitle';
 import Task from '../Task/Task';
+import { Delete } from '@material-ui/icons';
 
 type TodolistPropsType = {
   todolistId: string;
@@ -23,8 +23,10 @@ const TodoList: React.FC<TodolistPropsType> = ({
   filter,
   date,
 }) => {
-  const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks);
   const dispatch = useDispatch();
+  const allTasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks);
+  const tasks = allTasks.filter(task => task.todolistId === todolistId);
+  const isAllTasksComleted = tasks.every(task => task.status === FilterValuesType.completed);
 
   const removeTodoList = () => {
     dispatch(removeTodolistAC(todolistId));
@@ -42,24 +44,32 @@ const TodoList: React.FC<TodolistPropsType> = ({
     dispatch(addTaskAC(todolistId, title));
   };
 
-  const filteredTasks = tasks.filter(task => task.status !== filter);
-
+  const filteredTasks = tasks.filter(task => {
+    return filter === FilterValuesType.all ? true : task.status === filter;
+  });
+  
   return (
-    <Box maxWidth="300px" style={{ wordBreak: "break-all" }}  >
-      <Typography>Created: {date}</Typography>
-      <h3>
+    <Box maxWidth="300px" display="flex" flexDirection="column" alignItems="center" style={{ wordBreak: "break-all" }}>
+      <Typography color="primary">Created: {date}</Typography>
+      {
+        isAllTasksComleted &&
+          <Typography color="secondary" >
+            All tasks completed
+          </Typography>
+      }
+      <Box>
         <EditableTitle title={title} onChange={changeTodoListTitle}/>
         <IconButton onClick={removeTodoList}>
           <Delete />
         </IconButton>
-      </h3>
+      </Box>
       <AddItemForm addItem={addTask}/>
       <div>
         {
-          filteredTasks.map(task => task.todolistId === todolistId && <Task key={task.taskId} {...task} />)
+          filteredTasks.map(task => <Task key={task.taskId} {...task} />)
         }
       </div>
-      <div>
+      <Box mt="15px">
         <Button
           variant={filter === FilterValuesType.all ? 'contained' : 'text'}
           onClick={onAllClickHandler}
@@ -84,7 +94,7 @@ const TodoList: React.FC<TodolistPropsType> = ({
         >
           Completed
         </Button>
-      </div>
+      </Box>
     </Box>
   );
 };
