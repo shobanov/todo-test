@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const initialState: Array<TodolistType> = [];
 
 const createDate = () => {
@@ -35,7 +37,7 @@ export const todolistsReducer = (state: Array<TodolistType> = initialState, acti
 };
 
 //actions
-export const addTodolistAC = (id: string, title: string) => ({ type: 'ADD-TODOLIST', id, title, date: createDate() } as const);
+export const addTodolistAC = (title: string) => ({ type: 'ADD-TODOLIST', id: uuidv4(), title, date: createDate() } as const);
 export const removeTodolistAC = (id: string) => ({ type: 'REMOVE-TODOLIST', id } as const);
 export const changeTodolistTitleAC = (id: string, newTitle: string) => ({ type: 'CHANGE-TODOLIST-TITLE', id, newTitle } as const);
 export const changeTodolistFilterAC = (value: FilterValuesType, id: string) => ({ type: 'CHANGE-TODOLIST-FILTER', value, id } as const);

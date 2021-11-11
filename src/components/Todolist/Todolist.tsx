@@ -1,21 +1,18 @@
 import { Grid, Paper } from '@material-ui/core';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
 import { AppRootStateType } from '../../redux/store';
 import { addTodolistAC, TodolistType } from '../../redux/todolists';
-import AddItemForm from '../AddItemForm/AddItemForm';
-import TodolistItem from '../TodolistItem/TodolistItem';
+import AddItemForm from '../AddItemForm';
+import TodolistItem from '../TodolistItem';
 
 const Todolist: React.FC = () => {
   const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists);
   const dispatch = useDispatch();
   
   const addTodolist = (title: string) => {
-    const todolistId = uuidv4();
-    
-    dispatch(addTodolistAC(todolistId, title));
+    dispatch(addTodolistAC(title));
   };
 
   return (

@@ -1,14 +1,15 @@
-import { Box, Button, Chip, IconButton, Typography } from '@material-ui/core';
+import { Box, Button, IconButton, Typography } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
 import { AppRootStateType } from '../../redux/store';
-import AddItemForm from '../AddItemForm/AddItemForm';
+import AddItemForm from '../AddItemForm';
 import { changeTodolistFilterAC, changeTodolistTitleAC, FilterValuesType, removeTodolistAC } from '../../redux/todolists';
 import { addTaskAC, TaskType } from '../../redux/tasks';
-import EditableTitle from '../EditableTitle/EditableTitle';
-import Task from '../Task/Task';
-import { Delete } from '@material-ui/icons';
+import EditableTitle from '../EditableTitle';
+import Task from '../Task';
+import styles from './TodolistItem.module.css';
 
 type TodolistPropsType = {
   todolistId: string;
@@ -26,7 +27,7 @@ const TodoList: React.FC<TodolistPropsType> = ({
   const dispatch = useDispatch();
   const allTasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks);
   const tasks = allTasks.filter(task => task.todolistId === todolistId);
-  const isAllTasksComleted = tasks.every(task => task.status === FilterValuesType.completed);
+  const isTasksCompleted = tasks.every(task => task.status === FilterValuesType.completed) && tasks.length > 0;
 
   const removeTodoList = () => {
     dispatch(removeTodolistAC(todolistId));
@@ -49,10 +50,10 @@ const TodoList: React.FC<TodolistPropsType> = ({
   });
   
   return (
-    <Box maxWidth="300px" display="flex" flexDirection="column" alignItems="center" style={{ wordBreak: "break-all" }}>
+    <Box className={styles.todolistItem}>
       <Typography color="primary">Created: {date}</Typography>
       {
-        isAllTasksComleted &&
+        isTasksCompleted &&
           <Typography color="secondary" >
             All tasks completed
           </Typography>
@@ -63,7 +64,7 @@ const TodoList: React.FC<TodolistPropsType> = ({
           <Delete />
         </IconButton>
       </Box>
-      <AddItemForm addItem={addTask}/>
+      <AddItemForm addItem={addTask} todolistId={todolistId}/>
       <div>
         {
           filteredTasks.map(task => <Task key={task.taskId} {...task} />)
