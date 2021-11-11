@@ -32,9 +32,8 @@ const AddItemForm = ({ addItem, todolistId }: AddItemFormPropsType) => {
     setTitle(e.currentTarget.value);    
   };
  
-
   const onPressEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isTaskTitleExist) {
       addItemHandler();
     };
   };
@@ -43,9 +42,7 @@ const AddItemForm = ({ addItem, todolistId }: AddItemFormPropsType) => {
     if (isTaskTitleExist) {
       setErrorMessage('Such title already exists!');
     } else {
-      
       setErrorMessage(null);
-      
     }
   }, [isTaskTitleExist]);
 
