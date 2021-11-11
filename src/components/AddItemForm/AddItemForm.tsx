@@ -18,8 +18,6 @@ const AddItemForm = ({ addItem, todolistId }: AddItemFormPropsType) => {
   const tasks = allTasks.filter(task => task.todolistId === todolistId);
   const tasksTitleList = Array.from(new Set(tasks.map(item => item.title)));
   const isTaskTitleExist = Boolean(tasks.length && tasksTitleList.some(item => item === title));
-
-  console.log(todolistId)
   
   const addItemHandler = () => {
     if (title.trim() !== '') {
