@@ -29,7 +29,8 @@ const AddItemForm = ({ addItem, todolistId }: AddItemFormPropsType) => {
   };
 
   const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value);    
+    setErrorMessage(null);
+    setTitle(e.currentTarget.value);
   };
  
   const onPressEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
