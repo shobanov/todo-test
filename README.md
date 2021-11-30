@@ -1,5 +1,5 @@
 # ToDo list
-[Demo](https://shobanov.github.io/todo-test/)
+[Demo](https://shobanov.github.io/todo-test/) :point_left:
 
 ## Тестовое задание
 
